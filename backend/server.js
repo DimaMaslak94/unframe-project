@@ -3,7 +3,7 @@ const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const authRoutes = require('./src/routes/authRoutes');
 const driveRoutes = require('./src/routes/driveRoutes');
-const oauth2Client = require('./src/services/oauthClient'); // Import the OAuth2 client from services
+const oauth2Client = require('./src/services/oauthClient');
 
 const app = express();
 const port = process.env.PORT || 3000; // Use PORT from .env or default to 3000
