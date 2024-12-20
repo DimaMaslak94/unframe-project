@@ -24,8 +24,8 @@ router.get('/google/callback', async (req, res) => {
     console.log('Access Token:', tokens.access_token);
     console.log('Refresh Token:', tokens.refresh_token);
 
-    // Redirect or respond to client as needed
-    res.send('Authorization successful! Tokens received. You can close this tab.');
+    // Redirect to client as needed
+    res.redirect(`http://localhost:8080?loggedIn=true`);
   } catch (error) {
     console.error('Error retrieving access token', error);
     res.status(500).send('Error retrieving access token');
