@@ -2,6 +2,10 @@
 
 This project consists of a Node.js backend and a Vue.js frontend for interacting with Google Drive, performing file operations, and integrating with OpenAI for question answering.
 
+## Quick Run
+1. run run_serves.sh
+2. navigate to http://localhost:8080/
+
 ## Setup
 
 ### Backend
@@ -25,6 +29,5 @@ This project consists of a Node.js backend and a Vue.js frontend for interacting
 - Node.js
 - Express
 - Vue.js
-- MongoDB
 - Google Drive API
 - OpenAI API
