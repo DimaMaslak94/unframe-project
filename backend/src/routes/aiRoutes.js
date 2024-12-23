@@ -10,7 +10,7 @@ dotenv.config({ path: path.join(__dirname, "..", "..", '.env') });
 // Configure OpenAI API
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true, // Only if needed for browser compatibility
+  dangerouslyAllowBrowser: true,
 });
 
 // Route to handle AI questions
@@ -19,7 +19,7 @@ router.post('/ask', async (req, res) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo', // or 'gpt-4' if you have access
+      model: 'gpt-3.5-turbo',
       messages: [
         { role: 'user', content: question },
       ],

@@ -1,10 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const dotenv = require('dotenv');
-// const path = require('path');
-
-// // Load environment variables
-// dotenv.config({ path: path.join(__dirname, "..", "..", '.env') });
 
 // Route to initiate OAuth flow
 router.get('/google', (req, res) => {
@@ -30,8 +25,8 @@ router.get('/google/callback', async (req, res) => {
     console.log('Access Token:', tokens.access_token);
     console.log('Refresh Token:', tokens.refresh_token);
 
-    // Redirect to client with token in URL parameters
-    res.redirect(`http://localhost:8080?loggedIn=true&token=${tokens.access_token}`);
+    // Redirect to client loggedIn=True
+    res.redirect(`http://localhost:8080?loggedIn=true`);
   } catch (error) {
     console.error('Error retrieving access token', error);
     res.status(500).send('Error retrieving access token');

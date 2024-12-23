@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { listFiles, uploadFile, updateFile, deleteFile } = require('../services/driveService');
+const { listFiles, uploadFile, updateFile, deleteFile, getFile } = require('../services/driveService');
 
 // Route to list files
 router.get('/files', async (req, res) => {
   const oauth2Client = req.oauth2Client;
   const { limit, offset, modifiedAfter } = req.query;
 
-  // Ensure OAuth2 client has credentials
   if (!oauth2Client.credentials || !oauth2Client.credentials.access_token) {
     return res.status(401).json({ error: 'Unauthorized: No access token provided' });
   }
@@ -70,7 +69,7 @@ router.post('/files/upload', async (req, res) => {
 // Route to update a file's name
 router.put('/files/update/:id', async (req, res) => {
   const { id } = req.params;
-  const { newName } = req.body;
+  const newName = req.body.name;
   const oauth2Client = req.oauth2Client;
 
   if (!oauth2Client.credentials || !oauth2Client.credentials.access_token) {
@@ -101,6 +100,23 @@ router.delete('/files/delete/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting file:', error);
     res.status(500).json({ error: 'Error deleting file' });
+  }
+});
+
+router.get('/files/:id', async (req, res) => {
+  const { id } = req.params;
+  const oauth2Client = req.oauth2Client;
+
+  if (!oauth2Client.credentials || !oauth2Client.credentials.access_token) {
+    return res.status(401).json({ error: 'Unauthorized: No access token provided' });
+  }
+
+  try {
+    const file = await getFile(oauth2Client, id);
+    res.json(file);
+  } catch (error) {
+    console.error('Error fetching file:', error);
+    res.status(500).json({ error: 'Error fetching file' });
   }
 });
 

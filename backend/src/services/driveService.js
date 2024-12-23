@@ -16,7 +16,7 @@ async function listFiles(auth, pageSize = 10, pageToken = null, modifiedAfter = 
     q: query,
     pageSize: pageSize,
     pageToken: pageToken,
-    fields: 'nextPageToken, files(id, name, owners, modifiedTime)',
+    fields: 'nextPageToken, files(id, name, owners, modifiedTime, size)',
   });
 
   return response.data; // Return files and nextPageToken
@@ -84,4 +84,19 @@ async function deleteFile(auth, fileId) {
   }
 }
 
-module.exports = { listFiles, uploadFile, updateFile, deleteFile };
+// get single file
+async function getFile(auth, fileId) {
+  const drive = google.drive({ version: 'v3', auth });
+  try {
+    const response = await drive.files.get({
+      fileId: fileId,
+      fields: 'id, name, mimeType, size, modifiedTime',
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching file:', error);
+    throw error;
+  }
+}
+
+module.exports = { listFiles, uploadFile, updateFile, deleteFile, getFile };
